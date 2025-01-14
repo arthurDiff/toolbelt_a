@@ -1,2 +1,14 @@
-[workspace]
-members = ["proc_macro"]
+[package]
+name = "toolbelt_a"
+version = "0.1.0"
+authors = ["arthurDiff <arthur.lee945@gmail.com>"]
+description = "Random tools for use"
+
+[lib]
+
+[dependencies]
+proc_macro = { path = "./proc_macro" }
+
+[features]
+default = []
+proc_macro = []
