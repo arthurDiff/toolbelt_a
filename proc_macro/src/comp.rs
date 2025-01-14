@@ -5,12 +5,14 @@
 //    | 'for' pattern 'in' sequence ('if' expression)*
 // pattern: name (, name)*
 
+use proc_macro2::TokenStream as TokenStream2;
+use quote::{quote, ToTokens};
 use syn::{
     parse::{Parse, ParseStream},
     Expr, Pat, Token,
 };
 
-struct Comprehension {
+pub(super) struct Comprehension {
     mapping: Expr,
     for_if_clause: ForIfClause,
 }
@@ -21,6 +23,23 @@ impl Parse for Comprehension {
             mapping: input.parse()?,
             for_if_clause: input.parse()?,
         })
+    }
+}
+
+impl ToTokens for Comprehension {
+    fn to_tokens(&self, tokens: &mut TokenStream2) {
+        let mapping = &self.mapping;
+        let ForIfClause {
+            pattern,
+            sequence,
+            conditions,
+        } = &self.for_if_clause;
+
+        tokens.extend(quote! {
+            core::iter::Iterator::into_iter(#sequence).flat_map(|#pattern|{
+                (true && #(&& (#conditions))*).then(|| #mapping)
+            })
+        });
     }
 }
 
@@ -51,6 +70,12 @@ impl Parse for Condition {
     fn parse(input: ParseStream) -> syn::Result<Self> {
         _ = input.parse::<Token![if]>()?;
         input.parse().map(Self)
+    }
+}
+
+impl ToTokens for Condition {
+    fn to_tokens(&self, tokens: &mut TokenStream2) {
+        self.0.to_tokens(tokens);
     }
 }
 

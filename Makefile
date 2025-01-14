@@ -1,2 +1,2 @@
 test:
-	cargo test -p $(proj)
+	cargo test 
