@@ -7,8 +7,15 @@ description = "Random tools for use"
 [lib]
 
 [dependencies]
-proc_macro = { path = "./proc_macro" }
+proc_macro = { path = "./proc_macro", optional = true }
+worker = { path = "./worker", optional = true }
+
+[package.metadata.docs.rs]
+rustdoc-args = ["--generate-link-to-definition"]
+
+### FEATURES #################################################################
 
 [features]
 default = []
-proc_macro = []
+prc_mcr = ["proc_macro"]
+wrk = ["worker"]

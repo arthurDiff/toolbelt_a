@@ -1,9 +1,9 @@
 extern crate toolbelt_a;
 
-#[cfg(feature = "proc_macro")]
+#[cfg(feature = "prc_mcr")]
 use toolbelt_a::comp;
 
-#[cfg(feature = "proc_macro")]
+#[cfg(feature = "prc_mcr")]
 #[test]
 fn test_comp_map_values() {
     let result = comp![x*x for x in [1,2,3]].collect::<Vec<_>>();
@@ -23,7 +23,7 @@ fn test_comp_map_values() {
     assert_eq!(result, [16, 32]);
 }
 
-#[cfg(feature = "proc_macro")]
+#[cfg(feature = "prc_mcr")]
 #[test]
 fn test_comp_filters_values() {
     let result = comp![num*8 for num in [2,3,4,5,7] if num % 2 == 0].collect::<Vec<_>>();
@@ -34,7 +34,7 @@ fn test_comp_filters_values() {
     assert_eq!(result, ["hello", "world"]);
 }
 
-#[cfg(feature = "proc_macro")]
+#[cfg(feature = "prc_mcr")]
 #[test]
 fn test_comp_multiple_for_if_clauses() {
     let result = comp![(x, y) for x in [1,2,3] for y in [6,7,8]].collect::<Vec<(_, _)>>();
