@@ -1,6 +1,6 @@
 mod comp;
 
-/// Python list comprehension implementation
+/// List Comprehension Implementation
 ///
 /// | 'mapping' for 'expr' in 'sequence' (if 'condition')* |
 ///

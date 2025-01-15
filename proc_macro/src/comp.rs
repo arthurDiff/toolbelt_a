@@ -15,6 +15,7 @@ use syn::{
 pub(super) struct Comprehension {
     mapping: Expr,
     for_if_clause: ForIfClause,
+    additional_for_ifs: Vec<ForIfClause>,
 }
 
 impl Parse for Comprehension {
@@ -22,24 +23,45 @@ impl Parse for Comprehension {
         Ok(Self {
             mapping: input.parse()?,
             for_if_clause: input.parse()?,
+            additional_for_ifs: parse_zero_or_more(input),
         })
     }
 }
 
 impl ToTokens for Comprehension {
     fn to_tokens(&self, tokens: &mut TokenStream2) {
-        let mapping = &self.mapping;
-        let ForIfClause {
-            pattern,
-            sequence,
-            conditions,
-        } = &self.for_if_clause;
+        let mut inv_for_ifs = std::iter::once(&self.for_if_clause)
+            .chain(&self.additional_for_ifs)
+            .rev();
 
-        tokens.extend(quote! {
-            core::iter::Iterator::into_iter(#sequence).flat_map(|#pattern|{
-                (true && #(&& (#conditions))*).then(|| #mapping)
-            })
-        });
+        let init_output = {
+            let mapping = &self.mapping;
+
+            let ForIfClause {
+                pattern,
+                sequence,
+                conditions,
+            } = inv_for_ifs.next().expect("Guaranteed One ForIfClause");
+
+            quote! {
+                core::iter::IntoIterator::into_iter(#sequence).flat_map(move|#pattern|{
+                    (true #(&& (#conditions))*).then(|| #mapping)
+                })
+            }
+        };
+
+        tokens.extend(inv_for_ifs.fold(init_output, |output, fic| {
+            let ForIfClause {
+                pattern,
+                sequence,
+                conditions,
+            } = fic;
+            quote! {
+                core::iter::IntoIterator::into_iter(#sequence).filter_map(move|#pattern|{
+                    (true #(&& (#conditions))*).then(|| #output)
+                }).flatten()
+            }
+        }))
     }
 }
 
