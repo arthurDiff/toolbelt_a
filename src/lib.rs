@@ -1,6 +1,5 @@
-#[cfg(feature = "prc_mcr")]
-extern crate proc_macro;
+pub mod proc_macro;
+mod result_error;
+pub mod sync;
 
-#[cfg(feature = "prc_mcr")]
-#[cfg_attr(docsrs, doc(cfg(feature = "prc_mcr")))]
-pub use proc_macro::comp;
+pub use crate::result_error::*;

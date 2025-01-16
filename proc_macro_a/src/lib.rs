@@ -9,6 +9,7 @@ mod comp;
 /// assert_eq!(new_list, [2,3,4,5]);
 /// ```
 #[proc_macro]
+#[cfg(feature = "comp")]
 pub fn comp(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     // parse input
     let c = syn::parse_macro_input!(input as comp::Comprehension);

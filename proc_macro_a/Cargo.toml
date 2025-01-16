@@ -1,5 +1,5 @@
 [package]
-name = "proc_macro"
+name = "proc_macro_a"
 version = "0.1.0"
 edition = "2021"
 
@@ -19,6 +19,8 @@ syn = { version = "2.0.96", default-features = false, features = [
     "proc-macro",
 ] }
 
-
 [package.metadata.docs.rs]
 rustdoc-args = ["--generate-link-to-definition"]
+
+[features]
+comp = []
