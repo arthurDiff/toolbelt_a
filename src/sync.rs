@@ -1,4 +1,4 @@
-// #[cfg(any(feature = "sync", feature = "worker"))]
+#[cfg(feature = "worker")]
 pub mod worker;
 
 pub mod result_worker;

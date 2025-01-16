@@ -20,8 +20,8 @@ rustdoc-args = ["--generate-link-to-definition"]
 [features]
 default = []
 ### PROC MACRO
-proc_macro = ["proc_macro_a/comp"]
+proc_macro = ["comp"]
 comp = ["proc_macro_a/comp"]
 ### SYNC
-sync = []
+sync = ["worker"]
 worker = []

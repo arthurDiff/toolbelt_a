@@ -4,5 +4,5 @@ pub mod sync;
 
 pub use crate::result_error::*;
 
-#[cfg(any(feature = "proc_macro", feature = "comp"))]
+#[cfg(feature = "comp")]
 extern crate proc_macro_a;
