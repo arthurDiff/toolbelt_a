@@ -1,5 +1,5 @@
 [package]
-name = "proc_macro_a"
+name = "toolbelt_a_pm"
 version = "0.1.0"
 edition = "2021"
 

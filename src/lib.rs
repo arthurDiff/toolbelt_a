@@ -1,5 +1,5 @@
 #[cfg(feature = "comp")]
-extern crate proc_macro_a;
+extern crate toolbelt_a_pm;
 #[cfg(any(feature = "proc_macro", feature = "comp"))]
 pub mod proc_macro;
 

@@ -50,15 +50,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "proc_macro_a"
-version = "0.1.0"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "quote"
 version = "1.0.38"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -112,8 +103,17 @@ dependencies = [
 name = "toolbelt_a"
 version = "0.1.0"
 dependencies = [
- "proc_macro_a",
  "rand",
+ "toolbelt_a_pm",
+]
+
+[[package]]
+name = "toolbelt_a_pm"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]

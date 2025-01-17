@@ -11,7 +11,7 @@ categories = ["sync-utilities"]
 [lib]
 
 [dependencies]
-proc_macro_a = { version = "0.1.0", path = "./proc_macro_a", optional = true }
+toolbelt_a_pm = { version = "0.1.0", path = "./toolbelt_a_pm", optional = true }
 
 [dev-dependencies]
 rand = "0.8.5"
@@ -25,7 +25,7 @@ rustdoc-args = ["--generate-link-to-definition"]
 default = []
 ### PROC MACRO
 proc_macro = ["comp"]
-comp = ["proc_macro_a/comp"]
+comp = ["toolbelt_a_pm/comp"]
 ### SYNC
 sync = ["worker", "result_worker", "thread_pool"]
 worker = []
