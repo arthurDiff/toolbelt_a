@@ -4,8 +4,10 @@ version = "0.1.0"
 authors = ["arthurDiff <arthur.lee945@gmail.com>"]
 description = "Random tools for use"
 repository = "https://github.com/arthurDiff/toolbelt_a"
+readme = "crates-io.md"
 keywords = ["utility"]
 categories = ["sync-utilities"]
+
 [lib]
 
 [dependencies]
