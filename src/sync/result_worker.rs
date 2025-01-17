@@ -19,7 +19,28 @@ pub struct ResultWorker<R: Send + 'static> {
     thread: Option<thread::JoinHandle<()>>,
 }
 
+impl<R: Send + 'static> Default for ResultWorker<R> {
+    /// Create a default ResultWorker
+    ///
+    /// # Panics
+    ///
+    /// `default` func will panic if failed creating new thread
+    fn default() -> Self {
+        let (sender, receiver, thread) = Self::prep(None).unwrap_or_else(|err| {
+            panic!("toolbelt_a failed creating result worker with err: {}", err)
+        });
+        Self {
+            sender: Some(sender),
+            receiver: Some(receiver),
+            thread: Some(thread),
+        }
+    }
+}
+
 impl<R: Send + 'static> ResultWorker<R> {
+    /// Create a new ResultWorker
+    ///
+    /// thread name can be provided
     pub fn new(name: Option<String>) -> crate::Result<Self> {
         let (sender, receiver, thread) = Self::prep(name)?;
         Ok(Self {
@@ -35,7 +56,7 @@ impl<R: Send + 'static> ResultWorker<R> {
     {
         let Some(sender) = &self.sender else {
             return Err(crate::Error::SyncError(
-                "result worker doesnot have sender".into(),
+                "result worker does not have sender".into(),
             ));
         };
         sender
@@ -46,7 +67,7 @@ impl<R: Send + 'static> ResultWorker<R> {
     pub fn recv(&self) -> crate::Result<R> {
         let Some(receiver) = &self.receiver else {
             return Err(crate::Error::SyncError(
-                "result worker doesnot have receiver".into(),
+                "result worker does not have receiver".into(),
             ));
         };
         receiver.recv().map_err(crate::Error::SyncRecvError)
@@ -55,7 +76,7 @@ impl<R: Send + 'static> ResultWorker<R> {
     pub fn try_recv(&self) -> crate::Result<R> {
         let Some(receiver) = &self.receiver else {
             return Err(crate::Error::SyncError(
-                "result worker doesnot have receiver".into(),
+                "result worker does not have receiver".into(),
             ));
         };
         receiver.try_recv().map_err(crate::Error::SyncTryRecvError)

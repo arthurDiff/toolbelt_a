@@ -13,7 +13,11 @@ pub struct Worker {
 }
 
 impl Default for Worker {
-    /// Will Panic On Failure
+    /// Create a default Worker
+    ///
+    /// # Panics
+    ///
+    /// `default` func will panic if failed creating new thread
     fn default() -> Self {
         let (thread, sender) = Self::prep(None)
             .unwrap_or_else(|err| panic!("toolbelt_a failed creating worker with err: {}", err));
@@ -25,6 +29,9 @@ impl Default for Worker {
 }
 
 impl Worker {
+    /// Create a new Worker
+    ///
+    /// thread name can be provided
     pub fn new(name: Option<String>) -> crate::Result<Self> {
         let (thread, sender) = Self::prep(name)?;
         Ok(Self {
@@ -38,7 +45,9 @@ impl Worker {
         F: FnOnce() + Send + 'static,
     {
         let Some(sender) = &self.sender else {
-            return Err(crate::Error::SyncError("worker doesnot have sender".into()));
+            return Err(crate::Error::SyncError(
+                "worker does not have sender".into(),
+            ));
         };
         sender
             .send(Message::NewTask(Box::new(f)))

@@ -23,5 +23,7 @@ default = []
 proc_macro = ["comp"]
 comp = ["proc_macro_a/comp"]
 ### SYNC
-sync = ["worker"]
+sync = ["worker", "result_worker", "thread_pool"]
 worker = []
+result_worker = []
+thread_pool = []

@@ -1,7 +1,19 @@
 #[cfg(feature = "worker")]
-pub mod worker;
+mod worker;
+#[cfg(feature = "worker")]
+pub use self::worker::Worker;
 
-pub mod result_worker;
+#[cfg(feature = "result_worker")]
+mod result_worker;
+
+#[cfg(feature = "result_worker")]
+pub use self::result_worker::ResultWorker;
+
+#[cfg(feature = "thread_pool")]
+mod thread_pool;
+
+#[cfg(feature = "thread_pool")]
+pub use self::thread_pool::ThreadPool;
 
 trait FnBox<T = ()> {
     fn run_task(self: Box<Self>) -> T;

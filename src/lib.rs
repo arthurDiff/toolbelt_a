@@ -1,8 +1,15 @@
-pub mod proc_macro;
-mod result_error;
-pub mod sync;
-
-pub use crate::result_error::*;
-
 #[cfg(feature = "comp")]
 extern crate proc_macro_a;
+#[cfg(any(feature = "proc_macro", feature = "comp"))]
+pub mod proc_macro;
+
+#[cfg(any(
+    feature = "sync",
+    feature = "worker",
+    feature = "result_worker",
+    feature = "thread_pool"
+))]
+pub mod sync;
+
+mod result_error;
+pub use crate::result_error::*;
