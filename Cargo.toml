@@ -8,6 +8,14 @@ readme = "crates-io.md"
 keywords = ["utility"]
 categories = ["sync-utilities"]
 license = "MIT"
+exclude = [
+    "tests/*",
+    ".github/*",
+    ".githook/*",
+    ".gitignore",
+    "Makefile",
+    "README.md",
+]
 
 [lib]
 
