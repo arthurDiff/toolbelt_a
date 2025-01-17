@@ -2,6 +2,9 @@
 name = "toolbelt_a_pm"
 version = "0.1.0"
 edition = "2021"
+authors = ["arthurDiff <arthur.lee945@gmail.com>"]
+description = "toolbelt_a's proc macros"
+repository = "https://github.com/arthurDiff/toolbelt_a"
 
 [lib]
 proc-macro = true
