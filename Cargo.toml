@@ -6,7 +6,6 @@ description = "random tools for use"
 repository = "https://github.com/arthurDiff/toolbelt_a"
 readme = "crates-io.md"
 keywords = ["utility"]
-categories = ["sync-utilities"]
 license = "MIT"
 exclude = [
     "tests/*",
